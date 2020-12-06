@@ -58,33 +58,33 @@ function setPeople() {
 
 function santa() {
     setPeople();
-    num = [];
+    num = new Array(numPeople);
 
-    if(numPeople % 2 == 0) {
-        santas = people.reverse();
-        if(numPeople >= 4) {
-            var number = Math.floor(Math.random() * 9);
-            if(number < 3) {
-                //[santas[numPeople - 1], santas[numPeople - 2], santas[numPeople - 3]] = [santas[numPeople - 1], santas[numPeople - 3], santas[numPeople - 2]];
-            }
-            else if(number >= 3 && num < 6) {
-                [santas[numPeople - 1], santas[numPeople - 2], santas[numPeople - 3]] = [santas[numPeople - 2], santas[numPeople - 3], santas[numPeople - 1]];
-            }
-            else if(number >= 6 && num < 9) {
-                [santas[numPeople - 1], santas[numPeople - 2], santas[numPeople - 3]] = [santas[numPeople - 3], santas[numPeople - 1], santas[numPeople - 2]];
-            }
-        }
+    for(var i = 0;i < numPeople;i++) {
+        num[i] = -1;
     }
-    else {
-        santas = people.reverse();
-        var number = Math.floor(Math.random() * 10);
-        if(number > 4) {
-            [santas[0], santas[Math.floor(numPeople / 2)]] = [santas[Math.floor(numPeople / 2)], santas[0]];
-        }
-        else {
-            [santas[numPeople - 1], santas[Math.floor(numPeople / 2)]] = [santas[Math.floor(numPeople / 2)], santas[numPeople - 1]];
-        }
+
+    for(var i = 0;i < numPeople;i++) {
+        var number;
         
+        for(var j = 0;;j++) {
+            number = Math.floor(Math.random() * numPeople);
+            var good = number != i;
+
+            for(var k = 0;k < numPeople;k++) {
+                if(number == num[k]) {
+                    good = false;
+                    break;
+                }
+            }
+
+            if(good) {
+                break;
+            }
+        }
+
+        santas[i] = people[number];
+        num[i] = number;
     }
 
     console.log(santas);
